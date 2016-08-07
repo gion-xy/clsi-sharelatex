@@ -22,6 +22,8 @@ module.exports = LatexRunner =
 			command = LatexRunner._pdflatexCommand mainFile
 		else if compiler == "latex"
 			command = LatexRunner._latexCommand mainFile
+		else if compiler == "platex"
+			command = LatexRunner._platexCommand mainFile
 		else if compiler == "xelatex"
 			command = LatexRunner._xelatexCommand mainFile
 		else if compiler == "lualatex"
@@ -75,6 +77,12 @@ module.exports = LatexRunner =
 	_latexCommand: (mainFile) ->
 		LatexRunner._latexmkBaseCommand.concat [
 			"-pdfdvi", "-e", "$latex='latex -synctex=1 -interaction=batchmode %O %S'",
+			Path.join("$COMPILE_DIR", mainFile)
+		]
+
+	_platexCommand: (mainFile) ->
+		LatexRunner._latexmkBaseCommand.concat [
+			"-pdfdvi", // read option from /usr/local/share/latexmk/LatexMk
 			Path.join("$COMPILE_DIR", mainFile)
 		]
 
